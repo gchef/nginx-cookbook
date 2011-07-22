@@ -36,6 +36,7 @@ http {
   gzip              <%= node[:nginx][:gzip] %>;
   gzip_disable      <%= node[:nginx][:gzip_disable] %>;
 
+  gzip_min_length   <%= node[:nginx][:gzip_min_length] %>;
   gzip_vary         <%= node[:nginx][:gzip_vary] %>;
   gzip_proxied      <%= node[:nginx][:gzip_proxied] %>;
   gzip_comp_level   <%= node[:nginx][:gzip_comp_level] %>;

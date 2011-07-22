@@ -22,7 +22,8 @@ default[:nginx][:gzip_disable]      = "msie6"
 
 default[:nginx][:gzip_vary]         = "on"
 default[:nginx][:gzip_proxied]      = "any"
-default[:nginx][:gzip_comp_level]   = "2"
+default[:nginx][:gzip_comp_level]   = 2
+default[:nginx][:gzip_min_length]   = "1024"
 default[:nginx][:gzip_buffers]      = "16 8k"
 default[:nginx][:gzip_http_version] = "1.1"
 default[:nginx][:gzip_types] = [      "text/plain",
