@@ -46,7 +46,7 @@ bash "compile_nginx_source" do
     make && make install
   EOH
   creates node[:nginx][:binary]
-  notifies :restart, "service[nginx]"
+  notifies :restart, resources(:service => "nginx")
 end
 
 service "nginx" do
@@ -96,5 +96,5 @@ template "nginx.conf" do
   owner "root"
   group "root"
   mode "0644"
-  notifies :restart, "service[nginx]", :immediately
+  notifies :restart, resources(:service => "nginx"), :immediately
 end

@@ -46,13 +46,17 @@ end
   end
 end
 
+service "nginx" do
+  supports :status => true, :restart => true, :reload => true
+end
+
 template "nginx.conf" do
   path "#{node[:nginx][:dir]}/nginx.conf"
   source "nginx.conf.erb"
   owner "root"
   group "root"
   mode 0644
-  notifies :restart, "service[nginx]"
+  notifies :restart, resources(:service => "nginx")
 end
 
 template "#{node[:nginx][:dir]}/sites-available/default" do
@@ -63,6 +67,9 @@ template "#{node[:nginx][:dir]}/sites-available/default" do
 end
 
 service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-  action [ :enable, :start ]
+  action [:enable, :start]
+end
+
+nginx_site "default" do
+  action (node[:nginx][:default_site] ? :enable : :disable)
 end

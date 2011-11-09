@@ -36,3 +36,8 @@ default[:nginx][:gzip_types] = [      "text/plain",
                                       "application/xml",
                                       "application/xml+rss"
                                 ]
+
+# Enables default site
+#
+default[:nginx][:default_site] = true
+default[:nginx][:apps] = []
