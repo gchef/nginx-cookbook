@@ -22,7 +22,7 @@ require_recipe "apt"
 
 apt_repository "nginx" do
   uri "http://ppa.launchpad.net/nginx/stable/ubuntu"
-  distribution "lucid"
+  distribution `lsb_release -cs`.chomp
   components ["main"]
   keyserver "keyserver.ubuntu.com"
   key "C300EE8C"
