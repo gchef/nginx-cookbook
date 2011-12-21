@@ -11,8 +11,6 @@ http {
   ##
   # Basic Settings
   ##
-  include       <%= node[:nginx][:dir] %>/mime.types;
-  default_type  application/octet-stream;
 
   sendfile            on;
   tcp_nopush          on;
@@ -21,32 +19,48 @@ http {
   types_hash_max_size <%= node[:nginx][:types_hash_max_size] %>;
   server_tokens       <%= node[:nginx][:server_tokens] %>;
 
+  include       <%= node[:nginx][:dir] %>/mime.types;
+  default_type  application/octet-stream;
+
   server_names_hash_bucket_size <%= node[:nginx][:server_names_hash_bucket_size] %>;
   server_name_in_redirect       <%= node[:nginx][:server_name_in_redirect] %>;
 
   ##
   # Logging Settings
   ##
+
   access_log	<%= node[:nginx][:log_dir] %>/access.log;
   error_log   <%= node[:nginx][:log_dir] %>/error.log;
 
   ##
   # Gzip Settings
   ##
+
   gzip              <%= node[:nginx][:gzip] %>;
   gzip_disable      <%= node[:nginx][:gzip_disable] %>;
 
-  gzip_min_length   <%= node[:nginx][:gzip_min_length] %>;
   gzip_vary         <%= node[:nginx][:gzip_vary] %>;
   gzip_proxied      <%= node[:nginx][:gzip_proxied] %>;
   gzip_comp_level   <%= node[:nginx][:gzip_comp_level] %>;
   gzip_buffers      <%= node[:nginx][:gzip_buffers] %>;
   gzip_http_version <%= node[:nginx][:gzip_http_version] %>;
+  gzip_min_length   <%= node[:nginx][:gzip_min_length] %>;
   gzip_types        <%= node[:nginx][:gzip_types].join(' ') %>;
+
+
+	##
+	# If HTTPS, then set a variable so it can be passed along.
+	##
+
+	map $scheme $server_https {
+		default <%= node[:nginx][:default] %>;
+		https <%= node[:nginx][:https] %>;
+	}
 
   ##
   # Virtual Host Configs
   ##
+
   include <%= node[:nginx][:dir] %>/conf.d/*.conf;
   include <%= node[:nginx][:dir] %>/sites-enabled/*;
 }

@@ -27,7 +27,9 @@ apt_repository "nginx" do
   action :add
 end
 
-package "nginx"
+package "nginx" do
+  version node[:nginx][:version]
+end
 
 directory node[:nginx][:log_dir] do
   mode 0755

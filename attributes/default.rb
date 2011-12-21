@@ -1,4 +1,4 @@
-default[:nginx][:version]            = "1.0.5"
+default[:nginx][:version]            = "1.0.11"
 
 set[:nginx][:dir]                    = "/etc/nginx"
 set[:nginx][:log_dir]                = "/var/log/nginx"
@@ -22,20 +22,23 @@ default[:nginx][:gzip_disable]      = "msie6"
 
 default[:nginx][:gzip_vary]         = "on"
 default[:nginx][:gzip_proxied]      = "any"
-default[:nginx][:gzip_comp_level]   = 2
-default[:nginx][:gzip_min_length]   = "1024"
+default[:nginx][:gzip_comp_level]   = 6
 default[:nginx][:gzip_buffers]      = "16 8k"
 default[:nginx][:gzip_http_version] = "1.1"
-default[:nginx][:gzip_types] = [      "text/plain",
-                                      "text/html",
-                                      "text/css",
-                                      "text/javascript",
-                                      "application/json",
-                                      "application/x-javascript",
-                                      "text/xml",
-                                      "application/xml",
-                                      "application/xml+rss"
+default[:nginx][:gzip_min_length]   = "1024"
+
+default[:nginx][:gzip_types] = [  "text/plain",
+                                  "text/css",
+                                  "application/json",
+                                  "application/x-javascript",
+                                  "text/xml",
+                                  "application/xml",
+                                  "application/xml+rss",
+                                  "text/javascript"
                                 ]
+
+default[:nginx][:default] = "off"
+default[:nginx][:https] = "on"
 
 # Enables default site
 #
