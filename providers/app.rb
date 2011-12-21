@@ -1,7 +1,7 @@
 action :add do
-  template "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
+  template "#{node.nginx.dir}/sites-available/#{new_resource.name}" do
     cookbook "nginx"
-    source "app.conf.erb"
+    source "#{new_resource.type}.app.conf.erb"
     owner "root"
     group "root"
     mode "0644"

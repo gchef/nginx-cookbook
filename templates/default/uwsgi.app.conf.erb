@@ -1,0 +1,14 @@
+server {
+  listen 80 default deferred;
+  server_name <%= @app.domains %>;
+  root <%= @app.public_path %>;
+  try_files $uri/index.html $uri @<%= @app.upstream %>;
+  location @<%= @app.upstream %> {
+    include uwsgi_params;
+    uwsgi_pass <%= @app.upstream_connection %>;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 4G;
+  keepalive_timeout 10;
+}
