@@ -28,7 +28,7 @@ apt_repository "nginx" do
 end
 
 package "nginx" do
-  version node[:nginx][:version]
+  version "#{node[:nginx][:version]}*"
 end
 
 directory node[:nginx][:log_dir] do
