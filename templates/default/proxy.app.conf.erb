@@ -3,7 +3,7 @@ upstream <%= @app.upstream %> {
 }
 
 server {
-  listen 80 default deferred;
+  listen 80 deferred;
   server_name <%= @app.domains %>;
   root <%= @app.public_path %>;
   try_files $uri/index.html $uri @<%= @app.upstream %>;
