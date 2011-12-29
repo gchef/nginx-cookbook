@@ -1,0 +1,10 @@
+server {
+  listen 80;
+
+  location /nginx_status {
+    stub_status on;
+    access_log  off;
+    allow       <%= node[:nginx][:status][:allow] %>;
+    deny        <%= node[:nginx][:status][:deny] %>;
+  }
+}

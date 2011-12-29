@@ -12,12 +12,19 @@ http {
   # Basic Settings
   ##
 
-  sendfile            on;
-  tcp_nopush          on;
-  tcp_nodelay         on;
-  keepalive_timeout   <%= node[:nginx][:keepalive_timeout] %>;
-  types_hash_max_size <%= node[:nginx][:types_hash_max_size] %>;
-  server_tokens       <%= node[:nginx][:server_tokens] %>;
+  sendfile              on;
+  tcp_nopush            on;
+  tcp_nodelay           on;
+
+  # Timeouts
+  client_body_timeout     <%= node[:nginx][:client_body_timeout] %>;
+  client_header_timeout   <%= node[:nginx][:client_header_timeout] %>;
+  keepalive_timeout       <%= node[:nginx][:keepalive_timeout] %>;
+  send_timeout            <%= node[:nginx][:send_timeout] %>;
+  ignore_invalid_headers  <%= node[:nginx][:ignore_invalid_headers] %>;
+
+  types_hash_max_size   <%= node[:nginx][:types_hash_max_size] %>;
+  server_tokens         <%= node[:nginx][:server_tokens] %>;
 
   include       <%= node[:nginx][:dir] %>/mime.types;
   default_type  application/octet-stream;
@@ -47,15 +54,14 @@ http {
   gzip_min_length   <%= node[:nginx][:gzip_min_length] %>;
   gzip_types        <%= node[:nginx][:gzip_types].join(' ') %>;
 
+  ##
+  # If HTTPS, then set a variable so it can be passed along.
+  ##
 
-	##
-	# If HTTPS, then set a variable so it can be passed along.
-	##
-
-	map $scheme $server_https {
-		default <%= node[:nginx][:default] %>;
-		https <%= node[:nginx][:https] %>;
-	}
+  map $scheme $server_https {
+    default <%= node[:nginx][:default] %>;
+    https <%= node[:nginx][:https] %>;
+  }
 
   ##
   # Virtual Host Configs
