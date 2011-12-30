@@ -5,7 +5,7 @@ action :enable do
         ln -nfs #{node[:nginx][:dir]}/sites-available/#{new_resource.name} \
         #{node[:nginx][:dir]}/sites-enabled/#{new_resource.name}
       }
-      notifies :reload, resources(:service => "nginx")
+      notifies :reload, "service[nginx]", :delayed
     end
     @nginx_site.enabled(true)
   end
@@ -17,7 +17,7 @@ action :disable do
       command %{
         rm -f #{node[:nginx][:dir]}/sites-enabled/#{new_resource.name}
       }
-      notifies :reload, resources(:service => "nginx")
+      notifies :reload, "service[nginx]", :delayed
     end
     @nginx_site.enabled(false)
   end

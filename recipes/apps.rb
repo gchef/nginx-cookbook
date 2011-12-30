@@ -6,6 +6,5 @@ node[:nginx][:apps].each do |app_name, app_attributes|
     domains               app_attributes[:domains]
     public_path           app_attributes[:public_path]
     action                app_attributes[:action]
-    notifies              :restart, resources(:service => "nginx"), :delayed
   end
 end
