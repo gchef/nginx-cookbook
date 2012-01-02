@@ -8,7 +8,7 @@ action :add do
     variables(
       :app => new_resource
     )
-    notifies :restart, "service[nginx]", :delayed
+    notifies :reload, resources(:service => "nginx"), :delayed
   end
 
   nginx_site new_resource.name
