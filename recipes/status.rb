@@ -5,3 +5,17 @@ template "#{node[:nginx][:dir]}/conf.d/status.conf" do
   backup false
   notifies :restart, "service[nginx]"
 end
+
+bash "Add nginx_status to hosts" do
+  code %{
+    match="nginx_status"
+    string="127.0.0.1 $match"
+    file=/etc/hosts
+
+    if [ $(grep -c $match $file) = 0 ]; then
+      echo "$string" >> $file
+    else
+      sed -i "s/.*$match.*/$string/g" $file
+    fi
+  }
+end

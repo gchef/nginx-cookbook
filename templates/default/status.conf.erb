@@ -1,8 +1,8 @@
 server {
-  listen 80 default;
-  server_name "";
+  listen 80;
+  server_name "nginx_status";
 
-  location /nginx_status {
+  location / {
     stub_status on;
     access_log  off;
     allow       <%= node[:nginx][:status][:allow] %>;
