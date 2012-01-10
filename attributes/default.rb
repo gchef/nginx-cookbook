@@ -8,7 +8,7 @@ set[:nginx][:user]                   = "www-data"
 default[:nginx][:worker_processes]   = cpu[:total]
 default[:nginx][:pid]                = "/var/run/nginx.pid"
 
-default[:nginx][:worker_connections] = 2048
+default[:nginx][:worker_connections] = 1024
 default[:nginx][:multi_accept]       = "off"
 
 # Directive sets the read timeout for the request body from client. The timeout
