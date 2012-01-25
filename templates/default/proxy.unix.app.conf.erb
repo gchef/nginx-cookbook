@@ -1,5 +1,5 @@
 upstream <%= @app.upstream %> {
-  server <%= @app.upstream_connection %>;
+  server <%= @app.unix_connection %>;
 }
 
 server {
