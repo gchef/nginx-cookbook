@@ -1,7 +1,7 @@
 action :add do
   service "nginx"
 
-  template "#{node.nginx.dir}/sites-available/#{new_resource.name}" do
+  template "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
     cookbook "nginx"
     source "proxy.conf.erb"
     owner "root"
@@ -19,5 +19,9 @@ end
 action :remove do
   nginx_site new_resource.name do
     action :disable
+  end
+
+  file "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
+    action :delete
   end
 end
