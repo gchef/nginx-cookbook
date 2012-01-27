@@ -101,6 +101,9 @@ default[:nginx][:default_site] = true
 default[:nginx][:apps]         = []
 
 # Status
+#
 default[:nginx][:status][:allow] = "127.0.0.1"
 default[:nginx][:status][:deny]  = "all"
 
+# Proxy cache, available globally
+default[:nginx][:proxy_cache] = []

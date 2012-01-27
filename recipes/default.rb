@@ -11,6 +11,8 @@ package "nginx" do
   version "#{node[:nginx][:version]}*"
 end
 
+service "nginx"
+
 directory node[:nginx][:log_dir] do
   owner node[:nginx][:user]
   group node[:nginx][:user]
@@ -35,7 +37,7 @@ template "nginx.conf" do
   group "root"
   mode 0644
   backup false
-  notifies :restart, "service[nginx]"
+  notifies :restart, resources(:service => "nginx"), :delayed
 end
 
 template "#{node[:nginx][:dir]}/sites-available/default" do
@@ -43,6 +45,19 @@ template "#{node[:nginx][:dir]}/sites-available/default" do
   owner "root"
   group "root"
   mode 0644
+end
+
+if node[:nginx][:proxy_cache].any?
+  file "#{node[:nginx][:dir]}/conf.d/cache.conf" do
+    owner "root"
+    group "root"
+    mode 0644
+    content(
+      node[:nginx][:proxy_cache].join("\n")
+    )
+    backup false
+    notifies :restart, resources(:service => "nginx"), :delayed
+  end
 end
 
 service "nginx" do

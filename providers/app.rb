@@ -1,9 +1,9 @@
 action :add do
-  proxy_type = new_resource.unix_connection ? ".unix" : ".tcp"
+  service "nginx"
 
   template "#{node.nginx.dir}/sites-available/#{new_resource.name}" do
     cookbook "nginx"
-    source "#{new_resource.type}#{proxy_type}.app.conf.erb"
+    source "proxy.conf.erb"
     owner "root"
     group "root"
     mode "0644"

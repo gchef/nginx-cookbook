@@ -1,9 +1,11 @@
+service "nginx"
+
 template "#{node[:nginx][:dir]}/conf.d/status.conf" do
   owner "root"
   group "root"
   mode 0644
   backup false
-  notifies :restart, "service[nginx]"
+  notifies :restart, resources(:service => "nginx"), :delayed
 end
 
 bash "Add nginx_status to hosts" do
