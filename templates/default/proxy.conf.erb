@@ -12,7 +12,7 @@ server {
   try_files $uri/index.html $uri @<%= @app.name %>;
 
   location @<%= @app.name %> {
-    <%= @app.access_control.join("\n\s\s") if @app.access_control.any? %>
+    <%= @app.access_control.join("\n\s\s\s\s") if @app.access_control.any? %>
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header Host $http_host;
     proxy_redirect off;
