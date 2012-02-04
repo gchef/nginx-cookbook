@@ -7,7 +7,7 @@ attribute :public_path,                 :kind_of => String,  :default => "/usr/s
 attribute :access_control,              :kind_of => Array,   :default => []
 attribute :custom_location_directives,  :kind_of => Array,   :default => []
 attribute :proxy_type,                  :kind_of => String,  :default => "proxy_pass",           :equal_to => %w[proxy_pass uwsgi_pass]
-attribute :upstream_servers,            :kind_of => Array,   :required => true
+attribute :upstream_servers,            :kind_of => Array,   :default => []
 attribute :custom_directives,           :kind_of => Array,   :default => []
 
 def initialize(*args)
