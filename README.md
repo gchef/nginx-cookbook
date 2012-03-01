@@ -21,6 +21,9 @@ apps):
           :server_port => 443,
           :server_name => "myapp.domain.com myapp.domain.com.local",
           :public_path => "/home/myapp/app/public",
+          :custom_location_directives => [
+            "proxy_set_header X-Forwarded-Proto https;"
+          ],
           :upstream_servers => [
             "unix:/home/myapp/app/tmp/web.sock max_fails=2 fail_timeout=5s",
             "127.0.0.1:8080 fail_timeout=5s backup"
@@ -39,4 +42,4 @@ We are using both a UNIX socket for the upstream (significantly quicker than a
 TCP one), and we're defining a backup TCP socket, just in case our UNIX one
 fails. We're also denifing some custom directives for this app's server block.
 [More nginx load balancing and reverse proxying
-tips](http://spin.atomicobject.com/2012/02/28/load-balancing-and-reverse-proxying-with-nginx/?utm_source=twitter&utm_medium=development).
+tips](http://spin.atomicobject.com/2012/02/28/load-balancing-and-reverse-proxying-with-nginx).
