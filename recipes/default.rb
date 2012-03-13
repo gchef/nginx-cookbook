@@ -7,9 +7,7 @@ apt_repository "nginx" do
   action :add
 end
 
-package "nginx" do
-  version "#{node[:nginx][:version]}*"
-end
+package "nginx"
 
 service "nginx"
 
