@@ -7,6 +7,7 @@ node[:nginx][:apps].each do |app_name, app_attributes|
     custom_location_directives  app_attributes[:custom_location_directives]
     proxy_type                  app_attributes[:proxy_type]
     upstream_servers            app_attributes[:upstream_servers]
+    proxy_headers               app_attributes[:proxy_headers]
     custom_directives           app_attributes[:custom_directives]
     action                      app_attributes[:action]
   end

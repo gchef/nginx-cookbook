@@ -11,6 +11,7 @@ server {
   server_name <%= @app.server_name %>;
 
   root <%= @app.public_path %>;
+  # Note if there are any files in the root matching these paths then they will be served before proxy is reached
   try_files $uri/index.html $uri @<%= @app.name %>;
 
   location @<%= @app.name %> {
@@ -18,8 +19,13 @@ server {
     <%= @app.custom_location_directives.join("\n\s\s\s\s") %>
 
     <% if @app.upstream_servers.any? -%>
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header Host $http_host;
+      
+      <% @app.proxy_headers.each_pair do |header, value| %>
+       proxy_set_header <%= header %> <%= value %>;
+      <% end %>
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+
     proxy_redirect off;
     <%= "include uwsgi_params;" if @app.proxy_type == "uwsgi_pass" %>
     <%= @app.proxy_type %> <%= "http://" if @app.proxy_type == "proxy_pass" %><%= @app.name %>;
