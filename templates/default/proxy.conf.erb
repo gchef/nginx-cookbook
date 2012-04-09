@@ -11,30 +11,20 @@ server {
   server_name <%= @app.server_name %>;
 
   root <%= @app.public_path %>;
-  # Note if there are any files in the root matching these paths then they will be served before proxy is reached
-  try_files $uri/index.html $uri @<%= @app.name %>;
 
-  location @<%= @app.name %> {
-    <%= @app.access_control.join("\n\s\s\s\s") %>
-    <%= @app.custom_location_directives.join("\n\s\s\s\s") %>
+  <% if @app.try_files.any? %>
+  try_files <%= @app.try_files.join(" ") %>;
+  <% end %>
 
-    <% if @app.upstream_servers.any? -%>
-      
-      <% @app.proxy_headers.each_pair do |header, value| %>
-       proxy_set_header <%= header %> <%= value %>;
-      <% end %>
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-
-    proxy_redirect off;
-    <%= "include uwsgi_params;" if @app.proxy_type == "uwsgi_pass" %>
-    <%= @app.proxy_type %> <%= "http://" if @app.proxy_type == "proxy_pass" %><%= @app.name %>;
-    <% end -%>
+  <% @app.locations.each do |location| %>
+  location <%= location[:path] %> {
+    <%= location[:directives].join("\n\s\s\s\s") %>
   }
+  <% end %>
 
-  error_page 500 502 503 504 /500.html;
-  client_max_body_size 4G;
-  keepalive_timeout 10;
+  error_page 500 502 503 504 <%= @app.error_page %>;
+  client_max_body_size <%= @app.client_max_body_size %>;
+  keepalive_timeout <%= @app.keepalive_timeout %>;
 
   <%= @app.custom_directives.join("\n\s\s") + "\n" -%>
 }
