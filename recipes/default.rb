@@ -7,7 +7,18 @@ apt_repository "nginx" do
   action :add
 end
 
-package "nginx"
+package "nginx" do
+  version "#{node[:nginx][:version]}*"
+  options '-o Dpkg::Options::="--force-confold"'
+  only_if "[ $(dpkg -l nginx 2>&1 | grep #{node[:nginx][:version]} | grep -c '^h[ic] ') = 0 ]"
+end
+
+%w[nginx nginx-common nginx-full].each do |nginx_package|
+  bash "freeze #{nginx_package}" do
+    code "echo #{nginx_package} hold | dpkg --set-selections"
+    only_if "[ $(dpkg --get-selections | grep '#{nginx_package}' | grep -c 'hold') = 0 ] "
+  end
+end
 
 service "nginx"
 
