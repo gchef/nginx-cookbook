@@ -24,4 +24,8 @@ action :remove do
   file "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
     action :delete
   end
+
+  bash "delete all nginx logs for #{new_resource.name}" do
+    code "rm -f #{node[:nginx][:log_dir]}/#{new_resource.name}*"
+  end
 end
