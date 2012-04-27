@@ -10,7 +10,12 @@ server {
   listen <%= @app.server_port %>;
   server_name <%= @app.server_name %>;
 
+  access_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.access.log;
+  error_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.error.log;
+
+  <% if @app.public_path %>
   root <%= @app.public_path %>;
+  <% end %>
 
   <% if @app.try_files.any? %>
   try_files <%= @app.try_files.join(" ") %>;

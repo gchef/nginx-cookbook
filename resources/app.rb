@@ -3,7 +3,7 @@ actions :add, :remove
 attribute :name,                  :kind_of => String,  :name_attribute => true
 attribute :server_port,           :kind_of => Fixnum,  :default => 80
 attribute :server_name,           :kind_of => String
-attribute :public_path,           :kind_of => String,  :default => "/usr/share/nginx/www"
+attribute :public_path,           :kind_of => String
 attribute :locations,             :kind_of => Array,   :default => []
 attribute :upstream_servers,      :kind_of => Array,   :default => []
 attribute :try_files,             :kind_of => Array,   :default => [] # $uri/index.html $uri "@#{@app.name}"
