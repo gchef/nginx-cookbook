@@ -3,20 +3,23 @@ worker_processes  <%= node[:nginx][:worker_processes] %>;
 pid               <%= node[:nginx][:pid] %>;
 
 events {
-  worker_connections  <%= node[:nginx][:worker_connections] %>;
-  multi_accept        <%= node[:nginx][:multi_accept] %>;
+  use epoll;
+  worker_connections    <%= node[:nginx][:worker_connections] %>;
+  worker_rlimit_nofile  <%= node[:nginx][:worker_rlimit_nofile] %>;
+  multi_accept          <%= node[:nginx][:multi_accept] %>;
 }
 
 http {
   ##
   # Basic Settings
   ##
-
   sendfile              on;
   tcp_nopush            on;
   tcp_nodelay           on;
 
+  ##
   # Timeouts
+  ##
   client_body_timeout     <%= node[:nginx][:client_body_timeout] %>;
   client_header_timeout   <%= node[:nginx][:client_header_timeout] %>;
   keepalive_timeout       <%= node[:nginx][:keepalive_timeout] %>;
@@ -35,14 +38,12 @@ http {
   ##
   # Logging Settings
   ##
-
   access_log	<%= node[:nginx][:log_dir] %>/access.log;
   error_log   <%= node[:nginx][:log_dir] %>/error.log;
 
   ##
   # Gzip Settings
   ##
-
   gzip              <%= node[:nginx][:gzip] %>;
   gzip_disable      <%= node[:nginx][:gzip_disable] %>;
 
@@ -57,7 +58,6 @@ http {
   ##
   # If HTTPS, then set a variable so it can be passed along.
   ##
-
   map $scheme $server_https {
     default <%= node[:nginx][:default] %>;
     https <%= node[:nginx][:https] %>;
@@ -66,7 +66,6 @@ http {
   ##
   # Virtual Host Configs
   ##
-
   include <%= node[:nginx][:dir] %>/conf.d/*.conf;
   include <%= node[:nginx][:dir] %>/sites-enabled/*;
 }
