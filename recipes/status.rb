@@ -1,12 +1,14 @@
 service "nginx"
 
-template "#{node[:nginx][:dir]}/conf.d/status.conf" do
+template "#{node[:nginx][:dir]}/sites-available/status" do
   owner "root"
   group "root"
   mode 0644
   backup false
   notifies :restart, resources(:service => "nginx"), :delayed
 end
+
+nginx_site "status"
 
 bash "Add nginx_status to hosts" do
   code %{
