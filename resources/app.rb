@@ -6,6 +6,7 @@ attribute :server_name,           :kind_of => String
 attribute :public_path,           :kind_of => String
 attribute :locations,             :kind_of => Array,   :default => []
 attribute :upstream_servers,      :kind_of => Array,   :default => []
+attribute :upstream_keepalive,    :kind_of => Fixnum,  :default => 16
 attribute :try_files,             :kind_of => Array,   :default => [] # $uri/index.html $uri "@#{@app.name}"
 attribute :error_page,            :kind_of => String,  :default => "/500.html"
 attribute :client_max_body_size,  :kind_of => String,  :default => "4G"

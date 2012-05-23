@@ -8,6 +8,7 @@ upstream <%= @app.name %> {
   <% @app.upstream_servers.each do |upstream_server| %>
   server <%= upstream_server %>;
   <% end %>
+  keepalive <%= @app.upstream_keepalive %>;
 }
 <% end -%>
 
