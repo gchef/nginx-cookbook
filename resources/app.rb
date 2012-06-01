@@ -1,15 +1,14 @@
 actions :add, :remove
 
 attribute :name,                  :kind_of => String,  :name_attribute => true
-attribute :server_port,           :kind_of => Fixnum,  :default => 80
 attribute :server_name,           :kind_of => String
+attribute :listen,                :kind_of => Array,  :default => [80]
 attribute :public_path,           :kind_of => String
 attribute :locations,             :kind_of => Array,   :default => []
-attribute :upstream_servers,      :kind_of => Array,   :default => []
-attribute :upstream_keepalive,    :kind_of => Fixnum,  :default => 16
+attribute :upstreams,             :kind_of => Array,   :default => []
+attribute :upstream_keepalive,    :kind_of => Fixnum,  :default => 4
 attribute :try_files,             :kind_of => Array,   :default => [] # $uri/index.html $uri "@#{@app.name}"
-attribute :error_page,            :kind_of => String,  :default => "/500.html"
-attribute :client_max_body_size,  :kind_of => String,  :default => "4G"
+attribute :client_max_body_size,  :kind_of => String,  :default => "16M"
 attribute :keepalive_timeout,     :kind_of => Fixnum,  :default => 10
 attribute :custom_directives,     :kind_of => Array,   :default => []
 
