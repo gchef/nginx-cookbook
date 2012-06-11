@@ -8,7 +8,7 @@ apt_repository "nginx" do
 end
 
 package "nginx" do
-  version "#{node[:nginx][:version]}*"
+  version "#{node[:nginx][:version]}"
   options '-o Dpkg::Options::="--force-confold"'
   only_if "[ $(dpkg -l nginx 2>&1 | grep #{node[:nginx][:version]} | grep -c '^h[ic] ') = 0 ]"
 end
