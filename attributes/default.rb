@@ -1,4 +1,4 @@
-default[:nginx][:version]              = "1.2.*"
+default[:nginx][:version]              = "1.2.1"
 
 default[:nginx][:dir]                  = "/etc/nginx"
 default[:nginx][:log_dir]              = "/var/log/nginx"
