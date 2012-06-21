@@ -56,6 +56,14 @@ template "#{node[:nginx][:dir]}/sites-available/default" do
   mode 0644
 end
 
+directory node[:nginx][:proxy_cache_dir] do
+  owner node[:nginx][:user]
+  group node[:nginx][:user]
+  mode 0755
+  recursive true
+  action :create
+end
+
 if node[:nginx][:proxy_cache].any?
   file "#{node[:nginx][:dir]}/conf.d/cache.conf" do
     owner "root"
