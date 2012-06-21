@@ -1,6 +1,7 @@
 service "nginx"
 
-template "#{node[:nginx][:dir]}/sites-available/status" do
+template "#{node[:nginx][:dir]}/sites-available/nginx_status" do
+  source "status.erb"
   owner "root"
   group "root"
   mode 0644
@@ -8,7 +9,7 @@ template "#{node[:nginx][:dir]}/sites-available/status" do
   notifies :restart, resources(:service => "nginx"), :delayed
 end
 
-nginx_site "status"
+nginx_site "nginx_status"
 
 bash "Add nginx_status to hosts" do
   code %{
