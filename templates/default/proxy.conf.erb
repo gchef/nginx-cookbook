@@ -35,6 +35,6 @@ server {
 
   <% end %>
 
-  access_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.access.log;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.access.log <%= @app.access_log_format %>;
   error_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.error.log;
 }

@@ -11,6 +11,7 @@ attribute :try_files,             :kind_of => Array,   :default => [] # $uri/ind
 attribute :client_max_body_size,  :kind_of => String,  :default => "16M"
 attribute :keepalive_timeout,     :kind_of => Fixnum,  :default => 10
 attribute :custom_directives,     :kind_of => Array,   :default => []
+attribute :access_log_format,     :kind_of => String,  :default => "default"
 
 def initialize(*args)
   super

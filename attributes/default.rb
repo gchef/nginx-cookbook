@@ -1,11 +1,44 @@
-set[:nginx][:version]     = "1.2.1"
-set[:nginx][:source]      = "http://nginx.org/download/nginx-#{nginx[:version]}.tar.gz"
+set[:nginx][:version]               = "1.2.1"
+set[:nginx][:source]                = "http://nginx.org/download/nginx-#{nginx[:version]}.tar.gz"
 
-default[:nginx][:dir]     = "/etc/nginx"
-default[:nginx][:log_dir] = "/var/log/nginx"
-default[:nginx][:binary]  = "/usr/sbin/nginx"
+default[:nginx][:dir]               = "/etc/nginx"
+default[:nginx][:log_dir]           = "/var/log/nginx"
+default[:nginx][:access_log_format] = "default"
+default[:nginx][:binary]            = "/usr/sbin/nginx"
 
-default[:nginx][:user]    = "www-data"
+default[:nginx][:user]              = "www-data"
+
+# The log_format directive describes the format of a log entry. You can use
+# general variables in the format, as well as variables which exist only at the
+# moment of writing into the log:
+#
+#   * $body_bytes_sent, the number of bytes, transmitted to client minus the
+#   response headers. This variable is compatible with the %B parameter of
+#   Apache's mod_log_config (this was called $apache_bytes_sent, before version
+#   0.3.10)
+#   * $bytes_sent, the number of bytes transmitted to client
+#   * $connection, the number of connection
+#   * $msec, the current time at the moment of writing the log entry
+#   (microsecond accuracy)
+#   * $pipe, "p" if request was pipelined
+#   * $request_length, the length of the body of the request
+#   * $request_time, the time it took nginx to work on the request, in seconds
+#   with millisecond precision (just seconds for versions older than 0.5.19)
+#   * $status, status of answer
+#   * $time_iso8601, time in ISO 8601 format, e. g. 2011-03-21T18:52:25+03:00
+#   (added in 0.9.6)
+#   * $time_local, local time into common log format.
+#
+# The headers, transmitted to client, begin from the prefix "sent_http_", for
+# example, $sent_http_content_range.
+#
+# Note that variables produced by other modules can also be logged. For example
+# you can log upstream response headers with the prefix "upstream_http_", see
+# upstream http://wiki.nginx.org/NginxHttpUpstreamModule
+#
+# There is a predefined log format called "combined":
+#
+default[:nginx][:log_format][:default] = %{'$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent $request_time "$http_referer" "$http_user_agent"'}
 
 # A worker process is a single-threaded process.
 #
@@ -143,7 +176,7 @@ default[:nginx][:default_site] = true
 # Holds the entire vhost config
 # Check the apps recipe & the nginx_app provider
 #
-default[:nginx][:apps] = []
+default[:nginx][:apps] = {}
 
 # nginx status page (useful in conjunction with ganglia)
 #
