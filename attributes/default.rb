@@ -1,10 +1,11 @@
-default[:nginx][:version]              = "1.2.1*"
+set[:nginx][:version]     = "1.2.1"
+set[:nginx][:source]      = "http://nginx.org/download/nginx-#{nginx[:version]}.tar.gz"
 
-default[:nginx][:dir]                  = "/etc/nginx"
-default[:nginx][:log_dir]              = "/var/log/nginx"
-default[:nginx][:binary]               = "/usr/sbin/nginx"
+default[:nginx][:dir]     = "/etc/nginx"
+default[:nginx][:log_dir] = "/var/log/nginx"
+default[:nginx][:binary]  = "/usr/sbin/nginx"
 
-default[:nginx][:user]                 = "www-data"
+default[:nginx][:user]    = "www-data"
 
 # A worker process is a single-threaded process.
 #
@@ -30,7 +31,7 @@ default[:nginx][:user]                 = "www-data"
 #
 #   max_clients = worker_processes * worker_connections
 #
-default[:nginx][:worker_processes]     = cpu[:total]
+default[:nginx][:worker_processes] = cpu[:total]
 #
 # The worker_connections and worker_processes from the main section allows you
 # to calculate max clients you can handle:
@@ -42,7 +43,7 @@ default[:nginx][:worker_processes]     = cpu[:total]
 #   max clients = worker_processes * worker_connections/4
 # Since a browser opens 2 connections by default to a server and nginx uses the
 # fds (file descriptors) from the same pool to connect to the upstream backend,
-default[:nginx][:worker_connections]   = 1024
+default[:nginx][:worker_connections] = 1024
 #
 # Specifies the value for maximum file descriptors that can be opened by this
 # process.
@@ -112,15 +113,15 @@ default[:nginx][:server_tokens]                 = "off"
 default[:nginx][:server_names_hash_bucket_size] = 64
 default[:nginx][:server_name_in_redirect]       = "off"
 
-default[:nginx][:gzip]              = "on"
-default[:nginx][:gzip_disable]      = "msie6"
+default[:nginx][:gzip]                          = "on"
+default[:nginx][:gzip_disable]                  = "msie6"
 
-default[:nginx][:gzip_vary]         = "on"
-default[:nginx][:gzip_proxied]      = "any"
-default[:nginx][:gzip_comp_level]   = 6
-default[:nginx][:gzip_buffers]      = "16 8k"
-default[:nginx][:gzip_http_version] = "1.1"
-default[:nginx][:gzip_min_length]   = "1024"
+default[:nginx][:gzip_vary]                     = "on"
+default[:nginx][:gzip_proxied]                  = "any"
+default[:nginx][:gzip_comp_level]               = 6
+default[:nginx][:gzip_buffers]                  = "16 8k"
+default[:nginx][:gzip_http_version]             = "1.1"
+default[:nginx][:gzip_min_length]               = "1024"
 
 default[:nginx][:gzip_types] = [  "text/plain",
                                   "text/css",
@@ -135,16 +136,21 @@ default[:nginx][:gzip_types] = [  "text/plain",
 default[:nginx][:default] = "off"
 default[:nginx][:https]   = "on"
 
-# Enables default site
+# Enables/disables default site (ELB health checks maybe...)
 #
 default[:nginx][:default_site] = true
-default[:nginx][:apps]         = []
 
-# Status
+# Holds the entire vhost config
+# Check the apps recipe & the nginx_app provider
+#
+default[:nginx][:apps] = []
+
+# nginx status page (useful in conjunction with ganglia)
 #
 default[:nginx][:status][:allow] = "127.0.0.1"
 default[:nginx][:status][:deny]  = "all"
 
 # Proxy cache, available globally
+#
 default[:nginx][:proxy_cache_dir] = "/usr/share/nginx/cache"
 default[:nginx][:proxy_cache] = []

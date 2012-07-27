@@ -14,8 +14,12 @@ configure_flags = [
 ].join(" ")
 
 remote_file "/usr/local/src/nginx-#{node[:nginx][:version]}.tar.gz" do
-  source "http://sysoev.ru/nginx/nginx-#{node[:nginx][:version]}.tar.gz"
+  source node[:nginx][:source]
   action :create_if_missing
+end
+
+service "nginx" do
+  supports :start => true, :stop => true, :restart => true
 end
 
 bash "compile_nginx_source" do
@@ -26,7 +30,7 @@ bash "compile_nginx_source" do
     make && make install
   EOH
   creates node[:nginx][:binary]
-  notifies :restart, resources(:service => "nginx")
+  notifies :restart, resources(:service => "nginx"), :delayed
 end
 
 service "nginx" do
@@ -35,9 +39,9 @@ service "nginx" do
 end
 
 directory node[:nginx][:log_dir] do
-  mode 0755
   owner node[:nginx][:user]
-  action :create
+  group node[:nginx][:user]
+  mode "0755"
 end
 
 directory node[:nginx][:dir] do
