@@ -49,6 +49,14 @@ template "nginx.conf" do
   notifies :restart, resources(:service => "nginx"), :delayed
 end
 
+directory node[:nginx][:sites_common_dir] do
+  owner "root"
+  group "root"
+  mode "0755"
+  action :create
+end
+
+
 template "#{node[:nginx][:dir]}/sites-available/default" do
   source "default-site.erb"
   owner "root"

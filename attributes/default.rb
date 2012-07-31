@@ -5,6 +5,7 @@ default[:nginx][:dir]               = "/etc/nginx"
 default[:nginx][:log_dir]           = "/var/log/nginx"
 default[:nginx][:access_log_format] = "default"
 default[:nginx][:binary]            = "/usr/sbin/nginx"
+default[:nginx][:sites_common_dir]  = "#{nginx[:dir]}/sites-common"
 
 default[:nginx][:user]              = "www-data"
 
@@ -39,6 +40,16 @@ default[:nginx][:user]              = "www-data"
 # There is a predefined log format called "combined":
 #
 default[:nginx][:log_format][:default] = %{'$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent $request_time "$http_referer" "$http_user_agent"'}
+#
+# Most sites won't have configured favicon or robots.txt
+# and since its always grabbed, turn it off in access log
+# and turn off it's not-found error in the error log
+default[:nginx][:disable_favicon_logging] = true
+default[:nginx][:disable_robots_logging] = true
+#
+# Rather than just denying .ht* in the config, why not deny
+# access to all .hidden files
+default[:nginx][:disable_hidden] = true
 
 # A worker process is a single-threaded process.
 #
@@ -55,7 +66,7 @@ default[:nginx][:log_format][:default] = %{'$remote_addr - $remote_user [$time_l
 #
 # Nginx has the ability to use more than one worker process for several
 # reasons:
-#   * to use SMP 
+#   * to use SMP
 #   * to decrease latency when workers blockend on disk I/O
 #   * to limit number of connections per process when select()/poll() is used
 #
