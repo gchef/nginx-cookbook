@@ -4,7 +4,7 @@ template "#{node[:nginx][:dir]}/sites-available/nginx_status" do
   source "status.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode "0644"
   backup false
   notifies :restart, resources(:service => "nginx"), :delayed
 end

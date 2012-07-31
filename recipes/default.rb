@@ -25,7 +25,7 @@ service "nginx"
 directory node[:nginx][:log_dir] do
   owner node[:nginx][:user]
   group node[:nginx][:user]
-  mode 0755
+  mode "0755"
   action :create
 end
 
@@ -34,7 +34,7 @@ end
     source "#{nxscript}.erb"
     owner "root"
     group "root"
-    mode 0755
+    mode "0755"
     backup false
   end
 end
@@ -44,7 +44,7 @@ template "nginx.conf" do
   source "nginx.conf.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode "0644"
   backup false
   notifies :restart, resources(:service => "nginx"), :delayed
 end
@@ -53,13 +53,13 @@ template "#{node[:nginx][:dir]}/sites-available/default" do
   source "default-site.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode "0644"
 end
 
 directory node[:nginx][:proxy_cache_dir] do
   owner node[:nginx][:user]
   group node[:nginx][:user]
-  mode 0755
+  mode "0755"
   recursive true
   action :create
 end
@@ -68,7 +68,7 @@ if node[:nginx][:proxy_cache].any?
   file "#{node[:nginx][:dir]}/conf.d/cache.conf" do
     owner "root"
     group "root"
-    mode 0644
+    mode "0644"
     content(
       node[:nginx][:proxy_cache].join("\n")
     )
