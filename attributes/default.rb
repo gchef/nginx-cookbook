@@ -21,7 +21,7 @@ default[:nginx][:user]                 = "www-data"
 #
 # Nginx has the ability to use more than one worker process for several
 # reasons:
-#   * to use SMP 
+#   * to use SMP
 #   * to decrease latency when workers blockend on disk I/O
 #   * to limit number of connections per process when select()/poll() is used
 #
@@ -138,7 +138,7 @@ default[:nginx][:https]   = "on"
 # Enables default site
 #
 default[:nginx][:default_site] = true
-default[:nginx][:apps]         = []
+default[:nginx][:apps]         = {}
 
 # Status
 #
