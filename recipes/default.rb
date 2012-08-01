@@ -2,6 +2,8 @@ require_recipe "apt"
 
 apt_repository "nginx" do
   uri "http://ppa.launchpad.net/nginx/stable/ubuntu"
+  distribution node[:nginx][:distribution]
+  components node[:nginx][:components]
   keyserver "keyserver.ubuntu.com"
   key "C300EE8C"
   action :add
