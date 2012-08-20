@@ -5,6 +5,7 @@ if node[:nginx][:disable_favicon_logging]
     group "root"
     mode "0644"
     backup false
+    notifies :restart, resources(:service => "nginx"), :delayed
   end
 end
 
@@ -15,6 +16,7 @@ if node[:nginx][:disable_robots_logging]
     group "root"
     mode "0644"
     backup false
+    notifies :restart, resources(:service => "nginx"), :delayed
   end
 end
 
@@ -25,5 +27,6 @@ if node[:nginx][:disable_hidden]
     group "root"
     mode "0644"
     backup false
+    notifies :restart, resources(:service => "nginx"), :delayed
   end
 end

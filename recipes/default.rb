@@ -7,16 +7,18 @@ apt_repository "nginx" do
   action :add
 end
 
-package "nginx" do
-  version "#{node[:nginx][:version]}*"
-  options '-o Dpkg::Options::="--force-confold"'
-  only_if "[ $(dpkg -l nginx 2>&1 | grep #{node[:nginx][:version]}* | grep -c '^h[ic] ') = 0 ]"
+node[:nginx][:apt_packages].each do |nginx_package|
+  package nginx_package do
+    version "#{node[:nginx][:version]}*"
+    options '--force-yes -o Dpkg::Options::="--force-confold"'
+    only_if "[ $(dpkg -l #{nginx_package} 2>&1 | grep #{node[:nginx][:version]}.* | grep -c '^h[ic] ') = 0 ]"
+  end
 end
 
 %w[nginx nginx-common nginx-full].each do |nginx_package|
   bash "freeze #{nginx_package}" do
     code "echo #{nginx_package} hold | dpkg --set-selections"
-    only_if "[ $(dpkg --get-selections | grep '#{nginx_package}' | grep -c 'hold') = 0 ] "
+    only_if "[ $(dpkg --get-selections | grep -c '#{nginx_package}\W*hold') = 0 ] "
   end
 end
 
@@ -31,7 +33,6 @@ end
 
 %w{nxensite nxdissite}.each do |nxscript|
   template "/usr/sbin/#{nxscript}" do
-    source "#{nxscript}.erb"
     owner "root"
     group "root"
     mode "0755"
@@ -41,7 +42,6 @@ end
 
 template "nginx.conf" do
   path "#{node[:nginx][:dir]}/nginx.conf"
-  source "nginx.conf.erb"
   owner "root"
   group "root"
   mode "0644"

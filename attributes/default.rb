@@ -1,5 +1,6 @@
-set[:nginx][:version]               = "1.2.1"
+set[:nginx][:version]               = "1.2.3"
 set[:nginx][:source]                = "http://nginx.org/download/nginx-#{nginx[:version]}.tar.gz"
+set[:nginx][:apt_packages]          = %w[nginx-common nginx-full nginx]
 
 default[:nginx][:dir]               = "/etc/nginx"
 default[:nginx][:log_dir]           = "/var/log/nginx"
@@ -198,3 +199,9 @@ default[:nginx][:status][:deny]  = "all"
 #
 default[:nginx][:proxy_cache_dir] = "/usr/share/nginx/cache"
 default[:nginx][:proxy_cache] = []
+
+# Required if your nginx is behind a load balancer
+# These are the ELB defaults
+#
+default[:nginx][:real_ip][:header]        = "X-Forwarded-For"
+default[:nginx][:real_ip][:trusted_hosts] = %w[10.0.0.0/8 172.16.0.0/12 192.168.0.0/16]
