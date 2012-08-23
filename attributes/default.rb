@@ -205,3 +205,31 @@ default[:nginx][:proxy_cache] = []
 #
 default[:nginx][:real_ip][:header]        = "X-Forwarded-For"
 default[:nginx][:real_ip][:trusted_hosts] = %w[10.0.0.0/8 172.16.0.0/12 192.168.0.0/16]
+
+
+
+### Global SSL configuration
+#
+default[:nginx][:ssl][:certificate]           = false
+default[:nginx][:ssl][:certificate_key]       = false
+default[:nginx][:ssl][:session_cache]         = "shared:SSL:10m"
+default[:nginx][:ssl][:session_timeout]       = "10m"
+default[:nginx][:ssl][:protocols]             = "SSLv2 SSLv3 TLSv1 TLSv1.1 TLSv1.2"
+default[:nginx][:ssl][:ciphers]               = "RC4:HIGH:!aNULL:!MD5"
+default[:nginx][:ssl][:prefer_server_ciphers] = "on"
+
+
+
+### Global proxy configuration
+#
+default[:nginx][:proxy][:connect_timeout] = "5s";
+default[:nginx][:proxy][:redirect]        = "off";
+default[:nginx][:proxy][:http_version]    = "1.1";
+default[:nginx][:proxy_headers]           = [
+  "X-Forwarded-Proto $scheme",
+  "X-Forwarded-For $proxy_add_x_forwarded_for",
+  "X-Real-IP $remote_addr",
+  "Host $host",
+  "Connection ''"
+]
+
