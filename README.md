@@ -14,6 +14,8 @@ Take this SSL-only app being served by [rainbows][2]:
 
 ```ruby
 :nginx => {
+  :distribution => 'precise',
+  :components => ['main'],
   :apps => {
     :myapp_ssl => {
       :listen      => [443],
