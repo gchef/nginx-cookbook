@@ -19,7 +19,9 @@ Take this SSL-only app being served by [rainbows][2]:
       :listen      => [443],
       :server_name => "www.domain.com",
       :public_path => "/home/myapp/app/public",
-      :try_files   => "$uri @myapp_ruby",
+      :try_files   => [
+        "$uri @myapp_ruby"
+      ],
       :locations   => [
         {
           :path => "@myapp_ruby",
@@ -48,7 +50,7 @@ Take this SSL-only app being served by [rainbows][2]:
         "ssl on;",
         "ssl_certificate /var/certs/myapp.crt;",
         "ssl_certificate_key /var/certs/myapp.key;",
-        "ssl_session_cache shared:SSL:10m;"
+        "ssl_session_cache shared:SSL:10m;",
         "ssl_session_timeout 10m;"
       ]
     }
@@ -67,7 +69,7 @@ multiple back-end servers to which nginx will connect via TCP sockets.
 
 The `proxy_set_header Connection` directive is a hint that this cookbook
 supports [nginx upstream keepalive][3]. Default is 4 connections. This can be
-easily adjusted via the **nginx_app** provider. 
+easily adjusted via the **nginx_app** provider.
 
 If you find yourself specifying the `proxy_set_header` directives for
 multiple nginx apps, you can extract them into a common config file, eg.
