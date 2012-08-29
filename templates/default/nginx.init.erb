@@ -70,7 +70,7 @@ case "$1" in
 	reload)
 		echo -n "Reloading $DESC configuration: "
 		test_nginx_config
-		start-stop-daemon --stop --signal HUP --quiet --pidfile <%= node[:nginx][:pid] %> \
+		start-stop-daemon --stop --signal HUP --quiet --oknodo --pidfile <%= node[:nginx][:pid] %> \
 		    --exec $DAEMON || true
 		echo "$NAME."
 		;;
