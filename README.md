@@ -2,7 +2,7 @@ Installs nginx from package OR source code and sets up configuration
 handling similar to Debian's Apache2 scripts.
 
 ## Requires
-* [apt][1] (for nginx::source)
+* [apt][1] (for nginx::default)
 * build-essential (for nginx::source)
 
 ## Platform
