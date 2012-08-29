@@ -42,9 +42,13 @@ default[:nginx][:user]              = "www-data"
 #
 default[:nginx][:log_format][:default] = %{'$remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent $request_time "$http_referer" "$http_user_agent"'}
 #
-# Most sites won't have configured favicon or robots.txt
-# and since its always grabbed, turn it off in access log
-# and turn off it's not-found error in the error log
+# Most sites won't have configured favicon or robots.txt and since its always
+# grabbed, turn it off in access log and turn off it's not-found error in the
+# error log
+#
+# WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# If you are expecting upstreams to handle favicons or robots.txt files, don't
+# disable them because they will not be proxied correctly.
 default[:nginx][:disable_favicon_logging] = true
 default[:nginx][:disable_robots_logging] = true
 #
