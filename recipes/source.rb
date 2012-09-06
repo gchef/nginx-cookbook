@@ -18,10 +18,7 @@ remote_file "/usr/local/src/nginx-#{node[:nginx][:version]}.tar.gz" do
   action :create_if_missing
 end
 
-service "nginx" do
-  supports :start => true, :stop => true, :restart => true
-end
-
+service "nginx"
 bash "compile_nginx_source" do
   cwd "/usr/local/src"
   code <<-EOH
@@ -31,11 +28,6 @@ bash "compile_nginx_source" do
   EOH
   creates node[:nginx][:binary]
   notifies :restart, resources(:service => "nginx"), :delayed
-end
-
-service "nginx" do
-  supports :status => true, :restart => true, :reload => true
-  action :enable
 end
 
 directory node[:nginx][:log_dir] do
@@ -81,4 +73,9 @@ template "nginx.conf" do
   group "root"
   mode "0644"
   notifies :restart, resources(:service => "nginx"), :immediately
+end
+
+service "nginx" do
+  supports :status => true, :restart => true, :reload => true
+  action :enable
 end
