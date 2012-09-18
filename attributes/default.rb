@@ -237,3 +237,13 @@ default[:nginx][:proxy_headers]           = [
   "Connection ''"
 ]
 
+
+### Logrotation settings
+#
+default[:nginx][:logrotate][:period]        = "daily"
+default[:nginx][:logrotate][:keep]          = 7
+default[:nginx][:logrotate][:permissions]   = "0644 www-data www-data"
+default[:nginx][:logrotate][:copytruncate]  = false
+default[:nginx][:logrotate][:sharedscripts] = true
+default[:nginx][:logrotate][:prerotate]     = "if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi"
+default[:nginx][:logrotate][:postrotate]    = "[ ! -f /var/run/nginx.pid ] || kill -USR1 $(cat /var/run/nginx.pid)"
