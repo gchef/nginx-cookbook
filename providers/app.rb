@@ -1,5 +1,7 @@
 action :add do
-  service "nginx"
+  service "nginx" do
+    supports :status => true, :restart => true, :reload => true
+  end
 
   template "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
     cookbook "nginx"

@@ -24,7 +24,9 @@ end
   end
 end
 
-service "nginx"
+service "nginx" do
+  supports :status => true, :restart => true, :reload => true
+end
 
 directory node[:nginx][:log_dir] do
   owner node[:nginx][:user]
