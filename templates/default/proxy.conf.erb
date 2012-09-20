@@ -10,7 +10,7 @@ upstream <%= upstream.fetch(:name) { @app.name } %> {
 }
 
 <% end -%>
-
+<% unless @app.name.include?("upstream") -%>
 server {
   <% @app.listen.each do |listen| -%>
   listen <%= listen %>;
@@ -40,3 +40,4 @@ server {
 
   include <%= node[:nginx][:sites_common_dir] %>/*conf;
 }
+<% end -%>
