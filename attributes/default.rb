@@ -98,8 +98,33 @@ default[:nginx][:worker_connections] = 1024
 # process.
 default[:nginx][:worker_rlimit_nofile] = 1024
 default[:nginx][:pid]                  = "/var/run/nginx.pid"
-
-default[:nginx][:multi_accept]         = "off"
+#
+# multi_accept tries to accept() as many connections as possible after nginx
+# gets notification about a new connection.
+default[:nginx][:multi_accept] = "off"
+#
+# Directive activate or deactivate the usage of sendfile().
+# sendfile() copies data between one file descriptor and another. Because this
+# copying is done within the kernel, sendfile() is more efficient than the
+# combination of read(2) and write(2), which would require transferring data to
+# and from user space.
+# http://www.techrepublic.com/article/use-sendfile-to-optimize-data-transfer/1044112
+#
+# According to some sysadmins, enabling this can corrupt small, static files. I
+# personally have always kept this on without experiencing any issues.
+default[:nginx][:sendfile] = "on"
+#
+# This directive permits or forbids the use of the socket options TCP_NOPUSH
+# on FreeBSD or TCP_CORK on Linux. This option is only available when using
+# sendfile.  Setting this option causes nginx to attempt to send it's HTTP
+# response headers in one packet on Linux and FreeBSD 4.x
+# You can read more about the TCP_NOPUSH and TCP_CORK socket options http://wiki.nginx.org/ReadMoreAboutTcpNopush
+default[:nginx][:tcp_nopush] = "on"
+#
+# This directive allows or forbids the use of the socket option TCP_NODELAY.
+# Only included in keep-alive connections.
+# You can read more about the TCP_NODELAY socket option http://wiki.nginx.org/ReadMoreAboutTcpNodelay
+default[:nginx][:tcp_nodelay] = "on"
 
 # Directive sets the read timeout for the request body from client. The timeout
 # is set only if a body is not get in one readstep. If after this time the
@@ -226,10 +251,53 @@ default[:nginx][:ssl][:prefer_server_ciphers] = "on"
 
 ### Global proxy configuration
 #
+# This directive assigns a timeout for the connection to the upstream server.
+# It is necessary to keep in mind that this time out cannot be more than 75
+# seconds.
+#
+# This is not the time until the server returns the pages, that is the
+# proxy_read_timeout statement. If your upstream server is up, but hanging
+# (e.g. it does not have enough threads to process your request so it puts you
+# in the pool of connections to deal with later), then this statement will not
+# help as the connection to the server has been made.
 default[:nginx][:proxy][:connect_timeout] = "5s";
-default[:nginx][:proxy][:redirect]        = "off";
-default[:nginx][:proxy][:http_version]    = "1.1";
-default[:nginx][:proxy_headers]           = [
+#
+# This directive sets the read timeout for the response of the proxied server.
+# It determines how long nginx will wait to get the response to a request. The
+# timeout is established not for entire response, but only between two
+# operations of reading.
+# In contrast to proxy_connect_timeout, this timeout will catch a server that
+# puts you in it's connection pool but does not respond to you with anything
+# beyond that. Be careful though not to set this too low, as your proxy server
+# might take a longer time to respond to requests on purpose (e.g. when serving
+# you a report page that takes some time to compute). You are able though to
+# have a different setting per location, which enables you to have a higher
+# proxy_read_timeout for the report page's location.
+default[:nginx][:proxy][:read_timeout] = "60s";
+#
+# This directive assigns timeout with the transfer of request to the upstream
+# server. Timeout is established not on the entire transfer of request, but only
+# between two write operations. If after this time the upstream server will not
+# accept the new data, nginx will shutdown the connection.
+default[:nginx][:proxy][:send_timeout] = "60s";
+#
+# This directive sets the text, which must be changed in response-header
+# "Location" and "Refresh" in the response of the proxied server.
+#
+# Let us suppose the proxied server returned line Location: http://localhost:8000/two/some/uri/.
+#
+#   proxy_redirect http://localhost:8000/two/ http://frontend/one/;
+#
+# will rewrite this line in the form Location: http://frontend/one/some/uri/.
+#
+# In the replaceable line it is possible not to indicate the name of the server:
+#
+#   proxy_redirect http://localhost:8000/two/ /;
+#
+# then the basic name of server and port is set, if it is different from 80.
+default[:nginx][:proxy][:redirect] = "off";
+default[:nginx][:proxy][:http_version] = "1.1";
+default[:nginx][:proxy_headers] = [
   "X-Forwarded-Proto $scheme",
   "X-Forwarded-For $proxy_add_x_forwarded_for",
   "X-Real-IP $remote_addr",
