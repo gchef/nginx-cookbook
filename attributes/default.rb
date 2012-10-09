@@ -310,7 +310,7 @@ default[:nginx][:proxy_headers] = [
 #
 default[:nginx][:logrotate][:period]        = "daily"
 default[:nginx][:logrotate][:keep]          = 7
-default[:nginx][:logrotate][:permissions]   = "0644 www-data www-data"
+default[:nginx][:logrotate][:permissions]   = "0644 #{default[:nginx][:user]} #{default[:nginx][:user]}"
 default[:nginx][:logrotate][:copytruncate]  = false
 default[:nginx][:logrotate][:sharedscripts] = true
 default[:nginx][:logrotate][:prerotate]     = "if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi"
