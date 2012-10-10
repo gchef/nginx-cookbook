@@ -32,7 +32,7 @@ end
 
 directory node[:nginx][:log_dir] do
   owner node[:nginx][:user]
-  group node[:nginx][:user]
+  group node[:nginx][:group]
   mode "0755"
 end
 

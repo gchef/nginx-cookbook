@@ -9,6 +9,7 @@ default[:nginx][:binary]            = "/usr/sbin/nginx"
 default[:nginx][:sites_common_dir]  = "#{nginx[:dir]}/sites-common"
 
 default[:nginx][:user]              = "www-data"
+default[:nginx][:group]             = "www-data"
 
 # The log_format directive describes the format of a log entry. You can use
 # general variables in the format, as well as variables which exist only at the
@@ -310,7 +311,7 @@ default[:nginx][:proxy_headers] = [
 #
 default[:nginx][:logrotate][:period]        = "daily"
 default[:nginx][:logrotate][:keep]          = 7
-default[:nginx][:logrotate][:permissions]   = "0644 www-data www-data"
+default[:nginx][:logrotate][:mode]          = "0644"
 default[:nginx][:logrotate][:copytruncate]  = false
 default[:nginx][:logrotate][:sharedscripts] = true
 default[:nginx][:logrotate][:prerotate]     = "if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi"
