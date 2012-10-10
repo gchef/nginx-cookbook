@@ -30,7 +30,7 @@ end
 
 directory node[:nginx][:log_dir] do
   owner node[:nginx][:user]
-  group node[:nginx][:user]
+  group node[:nginx][:group]
   mode "0755"
   action :create
 end
@@ -70,7 +70,7 @@ end
 
 directory node[:nginx][:proxy_cache_dir] do
   owner node[:nginx][:user]
-  group node[:nginx][:user]
+  group node[:nginx][:group]
   mode "0755"
   recursive true
   action :create
@@ -99,10 +99,12 @@ nginx_site "default" do
 end
 
 if node.has_key?(:bootstrap)
+  rotated_logs_permissions = "#{node[:nginx][:logrotate][:mode]} #{node[:nginx][:user]} #{node[:nginx][:group]}"
+
   bootstrap_logrotate "nginx" do
     rotate node[:nginx][:logrotate][:period]
     keep node[:nginx][:logrotate][:keep]
-    permissions node[:nginx][:logrotate][:permissions]
+    permissions rotated_logs_permissions
     copytruncate node[:nginx][:logrotate][:copytruncate]
     sharedscripts node[:nginx][:logrotate][:sharedscripts]
     prerotate node[:nginx][:logrotate][:prerotate]
