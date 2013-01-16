@@ -35,8 +35,17 @@ server {
 
   <% end %>
 
+  <% if @app.access_log.empty? -%>
   access_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.access.log <%= @app.access_log_format %>;
+  <% else %>
+  access_log <%= @app.access_log %>;
+  <% end %>
+
+  <% if @app.error_log.empty? -%>
   error_log <%= node[:nginx][:log_dir] %>/<%= @app.name %>.error.log;
+  <% else %>
+  error_log <%= @app.error_log %>;
+  <% end %>
 
   include <%= node[:nginx][:sites_common_dir] %>/*conf;
 }
