@@ -1,3 +1,4 @@
+name              "nginx"
 maintainer        "Gerhard Lazu"
 maintainer_email  "gerhard@lazu.co.uk"
 license           "Apache 2.0"
