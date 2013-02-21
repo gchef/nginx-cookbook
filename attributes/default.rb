@@ -309,6 +309,7 @@ default[:nginx][:proxy_headers] = [
 
 ### Logrotation settings
 #
+default[:nginx][:logrotate][:manage]        = true
 default[:nginx][:logrotate][:period]        = "daily"
 default[:nginx][:logrotate][:keep]          = 7
 default[:nginx][:logrotate][:mode]          = "0644"

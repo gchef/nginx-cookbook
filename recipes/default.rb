@@ -99,16 +99,22 @@ nginx_site "default" do
 end
 
 if node.has_key?(:bootstrap)
-  rotated_logs_permissions = "#{node[:nginx][:logrotate][:mode]} #{node[:nginx][:user]} #{node[:nginx][:group]}"
+  if node[:nginx][:logrotate][:manage]
+    rotated_logs_permissions = "#{node[:nginx][:logrotate][:mode]} #{node[:nginx][:user]} #{node[:nginx][:group]}"
 
-  bootstrap_logrotate "nginx" do
-    rotate node[:nginx][:logrotate][:period]
-    keep node[:nginx][:logrotate][:keep]
-    permissions rotated_logs_permissions
-    copytruncate node[:nginx][:logrotate][:copytruncate]
-    sharedscripts node[:nginx][:logrotate][:sharedscripts]
-    prerotate node[:nginx][:logrotate][:prerotate]
-    postrotate node[:nginx][:logrotate][:postrotate]
+    bootstrap_logrotate "nginx" do
+      rotate node[:nginx][:logrotate][:period]
+      keep node[:nginx][:logrotate][:keep]
+      permissions rotated_logs_permissions
+      copytruncate node[:nginx][:logrotate][:copytruncate]
+      sharedscripts node[:nginx][:logrotate][:sharedscripts]
+      prerotate node[:nginx][:logrotate][:prerotate]
+      postrotate node[:nginx][:logrotate][:postrotate]
+    end
+  else
+    bootstrap_logrotate "nginx" do
+      action :delete
+    end
   end
 else
   Chef::Log.error("https://github.com/gchef/bootstrap-cookbook is not available, if you want to configure nginx logrotation, you will need to do it through a different recipe")
