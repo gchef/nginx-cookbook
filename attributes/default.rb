@@ -1,6 +1,5 @@
-set[:nginx][:version]               = "1.2.4"
-set[:nginx][:source]                = "http://nginx.org/download/nginx-#{nginx[:version]}.tar.gz"
-set[:nginx][:apt_packages]          = %w[nginx-common nginx-full nginx]
+default[:nginx][:version]           = "1.2.4"
+default[:nginx][:apt_packages]      = %w[nginx-common nginx-full nginx]
 
 default[:nginx][:dir]               = "/etc/nginx"
 default[:nginx][:log_dir]           = "/var/log/nginx"
