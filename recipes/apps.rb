@@ -10,6 +10,8 @@ node[:nginx][:apps].each do |app_name, app_attributes|
     client_max_body_size  app_attributes[:client_max_body_size]
     keepalive_timeout     app_attributes[:keepalive_timeout]
     custom_directives     app_attributes[:custom_directives]
+    access_log            app_attributes[:access_log]
+    error_log             app_attributes[:error_log]
     action                app_attributes[:action]
   end
 end
