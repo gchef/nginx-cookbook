@@ -36,7 +36,7 @@ server {
   <% end %>
 
   access_log <%= @app.access_log_path %> <%= @app.access_log_format %>;
-  error_log <%= @app.app_error_path %> <%= @app.error_log_format %>;
+  error_log <%= @app.error_log_path %> <%= @app.error_log_format %>;
 
   include <%= node[:nginx][:sites_common_dir] %>/*conf;
 }
