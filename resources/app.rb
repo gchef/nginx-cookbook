@@ -1,4 +1,5 @@
 actions :add, :remove
+default_action :add
 
 # http://wiki.nginx.org/HttpLogModule
 attribute :access_log,            :kind_of => String,  :default => ""
@@ -19,11 +20,6 @@ attribute :server_name,           :kind_of => String
 attribute :try_files,             :kind_of => Array,   :default => [] # $uri/index.html $uri "@#{@app.name}"
 attribute :upstream_keepalive,    :kind_of => Fixnum,  :default => 4
 attribute :upstreams,             :kind_of => Array,   :default => []
-
-def initialize(*args)
-  super
-  @action = :add
-end
 
 def access_log_path
   if access_log.empty?
