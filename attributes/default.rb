@@ -218,7 +218,7 @@ default[:nginx][:default_site] = true
 # Holds the entire vhost config
 # Check the apps recipe & the nginx_app provider
 #
-default[:nginx][:apps] = {}
+default[:nginx][:apps] = []
 
 # nginx status page (useful in conjunction with ganglia)
 #
