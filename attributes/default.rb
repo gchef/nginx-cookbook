@@ -244,8 +244,8 @@ default[:nginx][:ssl][:certificate]           = false
 default[:nginx][:ssl][:certificate_key]       = false
 default[:nginx][:ssl][:session_cache]         = "shared:SSL:10m"
 default[:nginx][:ssl][:session_timeout]       = "10m"
-default[:nginx][:ssl][:protocols]             = "SSLv2 SSLv3 TLSv1 TLSv1.1 TLSv1.2"
-default[:nginx][:ssl][:ciphers]               = "RC4:HIGH:!aNULL:!MD5"
+default[:nginx][:ssl][:protocols]             = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"
+default[:nginx][:ssl][:ciphers]               = "HIGH:RC4:+HIGH+TLSv1:-DH:!aNULL:!MD5"
 default[:nginx][:ssl][:prefer_server_ciphers] = "on"
 
 
