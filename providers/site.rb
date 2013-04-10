@@ -29,4 +29,8 @@ def load_current_resource
   @nginx_site.enabled(true) if ::File.exists?(
     "#{node[:nginx][:dir]}/sites-enabled/#{new_resource.name}"
   )
+
+  service "nginx" do
+    supports :status => true, :restart => true, :reload => true
+  end
 end
