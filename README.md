@@ -79,7 +79,14 @@ multiple nginx apps, you can extract them into a common config file, eg.
 
 [More nginx load balancing and reverse proxying tips] [4].
 
+### LINKS
+
+[Tuning Nginx for Best Performance][nginx_best_performance]
+[Serving small static files][nginx_small_static]
+
 [1]: https://github.com/gchef/apt-cookbook
 [2]: http://rainbows.rubyforge.org/
 [3]: http://nginx.org/en/docs/http/ngx_http_upstream_module.html#keepalive
 [4]: http://spin.atomicobject.com/2012/02/28/load-balancing-and-reverse-proxying-with-nginx
+[nginx_best_performance]: http://dak1n1.com/blog/12-nginx-performance-tuning
+[nginx_small_static]: http://nbonvin.wordpress.com/2011/03/24/serving-small-static-files-which-server-to-use/
