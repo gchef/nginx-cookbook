@@ -18,7 +18,15 @@ action :add do
   nginx_site new_resource.name
 end
 
+action :delete do
+  remove
+end
+
 action :remove do
+  remove
+end
+
+def remove
   nginx_site new_resource.name do
     action :disable
   end
