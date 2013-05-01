@@ -31,6 +31,6 @@ def load_current_resource
   )
 
   service "nginx" do
-    supports :status => true, :restart => true, :reload => true
+    supports :reload => true
   end
 end
