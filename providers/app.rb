@@ -1,8 +1,4 @@
 action :add do
-  service "nginx" do
-    supports :status => true, :restart => true, :reload => true
-  end
-
   template "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
     cookbook "nginx"
     source "proxy.conf.erb"
@@ -27,15 +23,14 @@ action :remove do
 end
 
 def remove
-  nginx_site new_resource.name do
-    action :disable
+  bash "Delete nginx vhosts & logs for #{new_resource.name}" do
+    code "rm -f #{node[:nginx][:log_dir]}/#{new_resource.name}* #{node[:nginx][:dir]}/sites*/#{new_resource.name}"
+    notifies :reload, resources(:service => "nginx"), :delayed
   end
+end
 
-  file "#{node[:nginx][:dir]}/sites-available/#{new_resource.name}" do
-    action :delete
-  end
-
-  bash "delete all nginx logs for #{new_resource.name}" do
-    code "rm -f #{node[:nginx][:log_dir]}/#{new_resource.name}*"
+def load_current_resource
+  service "nginx" do
+    supports :reload => true
   end
 end
