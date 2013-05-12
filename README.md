@@ -82,7 +82,10 @@ multiple nginx apps, you can extract them into a common config file, eg.
 ### LINKS
 
 [Tuning Nginx for Best Performance][nginx_best_performance]
+
 [Serving small static files][nginx_small_static]
+
+[nginx for high traffic loads][nginx_high_traffic]
 
 [1]: https://github.com/gchef/apt-cookbook
 [2]: http://rainbows.rubyforge.org/
@@ -90,3 +93,4 @@ multiple nginx apps, you can extract them into a common config file, eg.
 [4]: http://spin.atomicobject.com/2012/02/28/load-balancing-and-reverse-proxying-with-nginx
 [nginx_best_performance]: http://dak1n1.com/blog/12-nginx-performance-tuning
 [nginx_small_static]: http://nbonvin.wordpress.com/2011/03/24/serving-small-static-files-which-server-to-use/
+[nginx_high_traffic]: http://blog.martinfjordvald.com/2011/04/optimizing-nginx-for-high-traffic-loads/
