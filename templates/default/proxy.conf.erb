@@ -15,7 +15,9 @@ server {
   <% @app.listen.each do |listen| -%>
   listen <%= listen %>;
   <% end %>
+  <% if @app.server_name -%>
   server_name <%= @app.server_name %>;
+  <% end %>
   <% if @app.public_path -%>
   root <%= @app.public_path %>;
   <% end %>
