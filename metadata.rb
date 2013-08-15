@@ -11,6 +11,7 @@ recipe "nginx::apps", "Sets up a reverse proxy for every app, regardless whether
 recipe "nginx::status", "Enables nginx status on http://nginx_status"
 recipe "nginx::disable", "Disables favicon.ico & robots.txt logging, denies access to .hidden files"
 recipe "nginx::real_ip", "Correctly updates the client IP address from the request header, defaults to ELB X-Forwarded-For"
+recipe "nginx::self_signed_cert", "Generates a self signed certificate in the location specified by attributes"
 
 supports "ubuntu"
 supports "debian"
