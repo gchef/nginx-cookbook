@@ -1,4 +1,4 @@
-default[:nginx][:version]           = "1.4.3"
+default[:nginx][:version]           = "1.4.4"
 default[:nginx][:apt_packages]      = %w[nginx-common nginx-full nginx]
 
 default[:nginx][:dir]               = "/etc/nginx"
