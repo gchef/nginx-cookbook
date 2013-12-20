@@ -4,7 +4,7 @@ apt_repository "nginx" do
   uri "http://ppa.launchpad.net/nginx/stable/ubuntu"
   distribution node[:nginx][:distribution]
   components node[:nginx][:components]
-  keyserver "hkp://keyserver.ubuntu.com:80"
+  keyserver node[:nginx][:apt_keyserver]
   key "C300EE8C"
   action :add
 end
