@@ -250,6 +250,23 @@ default[:nginx][:ssl][:protocols]             = "SSLv3 TLSv1 TLSv1.1 TLSv1.2"
 default[:nginx][:ssl][:ciphers]               = "HIGH:RC4:+HIGH+TLSv1:-DH:!aNULL:!MD5"
 default[:nginx][:ssl][:prefer_server_ciphers] = "on"
 
+### Self-Signed Certificate Configuration
+#
+default[:nginx][:ssl][:self_signed][:path] = false # ex: /etc/nginx/ssl
+default[:nginx][:ssl][:self_signed][:cert] = false # ex: foo.cert
+default[:nginx][:ssl][:self_signed][:key] = false # ex: foo.key
+default[:nginx][:ssl][:self_signed][:valid_days] = 15
+default[:nginx][:ssl][:self_signed][:subject] = {}
+# subject is a Hash of any of the following values
+#  common_name: 'foo.example.com',
+#  country: 'US',
+#  state: 'MA',
+#  city: 'City',
+#  organization: 'Widgets Ltd',
+#  department: 'Ops',
+#  email: 'ops@foo.example.com'
+
+
 
 
 ### Global proxy configuration
