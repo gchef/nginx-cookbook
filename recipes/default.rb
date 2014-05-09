@@ -15,9 +15,7 @@ node[:nginx][:apt_packages].each do |nginx_package|
     options '--force-yes -o Dpkg::Options::="--force-confold"'
     only_if "[ $(dpkg -l #{nginx_package} 2>&1 | grep #{node[:nginx][:version]}.* | grep -c '^h[ic] ') = 0 ]"
   end
-end
 
-%w[nginx nginx-common nginx-full].each do |nginx_package|
   bash "freeze #{nginx_package}" do
     code "echo #{nginx_package} hold | dpkg --set-selections"
     only_if "[ $(dpkg --get-selections | grep -c '#{nginx_package}\W*hold') = 0 ]"
