@@ -25,7 +25,7 @@ http {
   # Resolver Settings
   ##
   resolver <%= node[:nginx][:resolver] %>;
-  resolver_timeout <%= node[:nginx][:resolver][:timeout] %>;
+  resolver_timeout <%= node[:nginx][:resolver_timeout] %>;
   <%- end -%>
 
   ##

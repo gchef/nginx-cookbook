@@ -124,7 +124,7 @@ default[:nginx][:resolver] = nil
 # Context:	http, server, location
 # Sets a timeout for name resolution, for example:
 #   resolver_timeout 5s;
-default[:nginx][:resolver][:timeout] = '30s'
+default[:nginx][:resolver_timeout] = '30s'
 
 #
 # Directive activate or deactivate the usage of sendfile().
