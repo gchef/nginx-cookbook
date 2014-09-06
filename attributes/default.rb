@@ -104,6 +104,28 @@ default[:nginx][:pid]                  = "/var/run/nginx.pid"
 # multi_accept tries to accept() as many connections as possible after nginx
 # gets notification about a new connection.
 default[:nginx][:multi_accept] = "off"
+
+#
+# Configures name servers used to resolve names of upstream servers into addresses, for example:
+#   resolver 127.0.0.1 [::1]:5353;
+# An address can be specified as a domain name or IP address, and an optional port (1.3.1, 1.2.2).
+# If port is not specified, the port 53 is used. Name servers are queried in a round-robin fashion.
+# By default, nginx will look up both IPv4 and IPv6 addresses while resolving. If looking up of IPv6 addresses is not desired,
+# the ipv6=off parameter can be specified.
+# Resolving of names into IPv6 addresses is supported starting from version 1.5.8.
+# By default, nginx caches answers using the TTL value of a response. An optional valid parameter allows overriding it:
+#   resolver 127.0.0.1 [::1]:5353 valid=30s;
+default[:nginx][:resolver] = nil
+
+# Before version 1.1.9, tuning of caching time was not possible, and nginx always cached answers for the duration of 5 minutes.
+#   Syntax:	resolver_timeout time;
+# Default:
+#   resolver_timeout 30s;
+# Context:	http, server, location
+# Sets a timeout for name resolution, for example:
+#   resolver_timeout 5s;
+default[:nginx][:resolver][:timeout] = '30s'
+
 #
 # Directive activate or deactivate the usage of sendfile().
 # sendfile() copies data between one file descriptor and another. Because this

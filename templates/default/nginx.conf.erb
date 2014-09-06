@@ -20,6 +20,14 @@ http {
   tcp_nopush            <%= node[:nginx][:tcp_nopush] %>;
   tcp_nodelay           <%= node[:nginx][:tcp_nodelay] %>;
 
+  <%- unless node[:nginx][:resolver].nil? -%>
+  ##
+  # Resolver Settings
+  ##
+  resolver <%= node[:nginx][:resolver] %>;
+  resolver_timeout <%= node[:nginx][:resolver][:timeout] %>;
+  <%- end -%>
+
   ##
   # Timeouts
   ##
