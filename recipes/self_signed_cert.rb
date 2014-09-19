@@ -41,7 +41,7 @@ ruby_block 'generate self-signed cert' do
       ::File.open("#{ssl_path}/#{node[:nginx][:ssl][:self_signed][:cert]}") {|f|
         f.write c.to_pem # write cert to specified path and filename
       }
-      ::File.open("#{ssl_path}/#{node[:nginx][:ssl][:self_signed][:key]}" {|f|
+      ::File.open("#{ssl_path}/#{node[:nginx][:ssl][:self_signed][:key]}") {|f|
         f.write k.to_pem # write private key to specified path and filename
       }
     end
