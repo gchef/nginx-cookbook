@@ -4,7 +4,7 @@ default[:nginx][:apt_packages]      = %w[nginx-common nginx-full nginx]
 default[:nginx][:apt_keyserver]     = "keyserver.ubuntu.com"
 default[:nginx][:apt_key]           = "C300EE8C"
 default[:nginx][:apt_uri]           = "http://ppa.launchpad.net/nginx/stable/ubuntu"
-
+default[:nginx][:distribution]      = node[:lsb][:codename]
 default[:nginx][:dir]               = "/etc/nginx"
 default[:nginx][:log_dir]           = "/var/log/nginx"
 default[:nginx][:access_log_format] = "default"
